@@ -8,8 +8,10 @@ public class EnemyView : MonoBehaviour
     [SerializeField] GameObject enemy, show;
     [SerializeField] Transform laserSpawnPoint;
     [SerializeField] float viewRange, viewAngle;
-    float dotDirection;
+    float dotConversion, dotDirection;
     MovementPlayer movementPlayer;
+    Vector3 eF;
+
 
 
     private void Start()
@@ -27,8 +29,10 @@ public class EnemyView : MonoBehaviour
         {
 
             dotDirection = Vector3.Dot(enemy.transform.forward, transform.forward);
+            eF = transform.position - enemy.transform.position;
+            dotConversion = Vector3.Dot(enemy.transform.forward, eF.normalized);
 
-            if (dotDirection > viewAngle)
+            if (dotConversion > 0.8 && dotDirection > viewAngle)
             {
                 show.SetActive(false);
                 movementPlayer.SeeYou(true);
