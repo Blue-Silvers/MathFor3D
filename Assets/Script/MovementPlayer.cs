@@ -19,18 +19,18 @@ public class MovementPlayer : MonoBehaviour
     private bool jump = false, isGrounded = true;
     [SerializeField] private LayerMask groundLayers;
     [SerializeField] private float _jumpStrength = 8f;
-    bool canFall = true;
     [SerializeField] Camera cam;
     [SerializeField] int fovValue;
     int aiming = 0;
 
     [SerializeField] bool backStab;
 
-    float velocity;
 
     Vector3 eF;
     float dotConversion, dotDirection;
     [SerializeField] float colisionDistance, backStabAngle;
+
+    [SerializeField] GameObject spotted;
 
     private void Start()
     {
@@ -40,6 +40,15 @@ public class MovementPlayer : MonoBehaviour
 
     private void Update()
     {
+        if(backStab == true)
+        {
+            spotted.SetActive(false);
+        }
+        else
+        {
+            spotted.SetActive(true);
+        }
+
         GameObject[] enemy;
         enemy = GameObject.FindGameObjectsWithTag("enemy");
 
@@ -58,6 +67,7 @@ public class MovementPlayer : MonoBehaviour
                             print("GG");
                             cutHit.GetComponent<MeshRenderer>().material.color = Color.red; 
                             Destroy(cutHit, 0.5f);
+                            backStab = true;
                         }
                         else
                         {
@@ -145,23 +155,6 @@ public class MovementPlayer : MonoBehaviour
             }
         }
 
-
-
-        if (rigidbody.velocity.y > 0)
-        {
-            canFall = true;
-
-        }
-        if (isGrounded)
-        {
-            canFall = false;
-        }
-
-
-        velocity = rigidbody.velocity.y;
-
-
-
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -174,6 +167,6 @@ public class MovementPlayer : MonoBehaviour
 
     public void SeeYou(bool enemySeeYou)
     {
-        backStab = !enemySeeYou;
+        backStab = enemySeeYou;
     }
 }

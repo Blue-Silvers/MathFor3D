@@ -31,12 +31,12 @@ public class EnemyView : MonoBehaviour
             if (dotDirection > viewAngle)
             {
                 show.SetActive(false);
-                movementPlayer.SeeYou(false);
+                movementPlayer.SeeYou(true);
             }
             else
             {
                 show.SetActive(true);
-                movementPlayer.SeeYou(true);
+                movementPlayer.SeeYou(false);
             }
 
         }
