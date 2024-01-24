@@ -16,6 +16,7 @@ public class rdRotate : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
         doMoove = false;
         doRotate = false;
+        gameObject.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
     }
     void Update()
     {
