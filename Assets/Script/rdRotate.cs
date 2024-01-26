@@ -11,6 +11,7 @@ public class rdRotate : MonoBehaviour
 
     bool doMoove, doRotate;
     int rdMoove, rdRotateTime;
+    
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -24,6 +25,7 @@ public class rdRotate : MonoBehaviour
         if (doRotate)
         {
             transform.rotation = transform.rotation * Quaternion.Euler(0, speedRotation , 0);
+            
         }
         else
         {
