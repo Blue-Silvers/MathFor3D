@@ -10,6 +10,7 @@ public class PlaneMoove : MonoBehaviour
     [SerializeField] private float horizontalSpeed;
     bool isRunning = false;
     private Vector2 input;
+    [SerializeField] private Vector3 magicAngle;
     [SerializeField] Rigidbody rigidbody;
     [SerializeField] Camera cam;
     [SerializeField] int fovValue;
@@ -48,10 +49,15 @@ public class PlaneMoove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        transform.rotation = transform.rotation * Quaternion.AngleAxis(- horizontalSpeed, new Vector3(input.x, input.y, 0));
+        float angle2 = horizontalSpeed * Time.deltaTime * input.y;
+        transform.rotation *= Quaternion.AngleAxis(angle2, Vector3.back);
 
-        Vector3 movement = new Vector3(0, -(transform.forward.y * 1 * speed * Time.deltaTime), -(transform.forward.x * 1 * speed * Time.deltaTime));
+        float angle = horizontalSpeed * Time.deltaTime * - input.x;
+        transform.rotation *= Quaternion.AngleAxis(angle, magicAngle);
+
+        Vector3 movement = new Vector3((transform.forward.y * 1 * speed * Time.deltaTime), 0, -(transform.forward.x * 1 * speed * Time.deltaTime));
         rigidbody.MovePosition(transform.position + movement);
+
 
         if (aiming == 1)
         {

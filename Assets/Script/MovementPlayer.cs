@@ -74,8 +74,6 @@ public class MovementPlayer : MonoBehaviour
                             print("Retry");
                         }
                     }
-
-
             }
         }
 
