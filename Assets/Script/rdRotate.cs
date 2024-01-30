@@ -29,7 +29,7 @@ public class rdRotate : MonoBehaviour
         }
         else
         {
-            rdRotateTime = Random.Range(0, 10000);
+            rdRotateTime = Random.Range(0, 1000);
             if (rdRotateTime < 3)
             {
                 Invoke("Rotating", (float)rdRotateTime);
@@ -44,7 +44,7 @@ public class rdRotate : MonoBehaviour
         }
         else
         {
-            rdMoove = Random.Range(0, 10000);
+            rdMoove = Random.Range(0, 1000);
             if (rdMoove < 7)
             {
                 Invoke("Mooving", (float)rdMoove);

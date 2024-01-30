@@ -9,7 +9,6 @@ public class EnemyView : MonoBehaviour
     [SerializeField] Transform laserSpawnPoint;
     [SerializeField] float viewRange, viewAngle;
     float dotConversion, dotDirection;
-    MovementPlayer movementPlayer;
     Vector3 eF;
 
 
@@ -17,7 +16,6 @@ public class EnemyView : MonoBehaviour
     private void Start()
     {
         show.SetActive(false);
-        movementPlayer = enemy.GetComponent<MovementPlayer>();
     }
     void Update()
     {
@@ -32,22 +30,19 @@ public class EnemyView : MonoBehaviour
             eF = transform.position - enemy.transform.position;
             dotConversion = Vector3.Dot(enemy.transform.forward, eF.normalized);
 
-            if (dotConversion > 0.8 && dotDirection > viewAngle)
+            if (dotConversion > 0.8 && dotDirection > viewAngle || eF.magnitude > hitPosition.x)
             {
                 show.SetActive(false);
-                movementPlayer.SeeYou(true);
             }
             else
             {
                 show.SetActive(true);
-                movementPlayer.SeeYou(false);
             }
 
         }
         else
         {
             show.SetActive(false);
-            movementPlayer.SeeYou(true);
         }
     }
 }

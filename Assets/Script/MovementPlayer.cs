@@ -30,7 +30,7 @@ public class MovementPlayer : MonoBehaviour
     float dotConversion, dotDirection;
     [SerializeField] float colisionDistance, backStabAngle;
 
-    [SerializeField] GameObject spotted;
+    [SerializeField] GameObject spotted, canBackstab;
 
     private void Start()
     {
@@ -40,14 +40,7 @@ public class MovementPlayer : MonoBehaviour
 
     private void Update()
     {
-        if(backStab == true)
-        {
-            spotted.SetActive(false);
-        }
-        else
-        {
-            spotted.SetActive(true);
-        }
+
 
         GameObject[] enemy;
         enemy = GameObject.FindGameObjectsWithTag("enemy");
@@ -67,13 +60,38 @@ public class MovementPlayer : MonoBehaviour
                             print("GG");
                             cutHit.GetComponent<MeshRenderer>().material.color = Color.red; 
                             Destroy(cutHit, 0.5f);
-                            backStab = true;
                         }
                         else
                         {
                             print("Retry");
                         }
                     }
+            }
+
+            eF = transform.position - cutHit.transform.position;
+            dotConversion = Vector3.Dot(cutHit.transform.forward, eF.normalized);
+            dotDirection = Vector3.Dot(cutHit.transform.forward, transform.forward);
+
+            if (dotConversion < 0.8 && dotDirection > backStabAngle && eF.magnitude <= colisionDistance && spotted.activeSelf == false)
+            {
+                canBackstab.SetActive(true);
+                backStab = true;
+            }
+            else
+            {
+                canBackstab.SetActive(false);
+                backStab = false;
+            }
+
+            GameObject[] suspect;
+            suspect = GameObject.FindGameObjectsWithTag("Sus");
+            if (suspect.Length > 0)
+            {
+                spotted.SetActive(true);
+            }
+            else 
+            { 
+                spotted.SetActive(false); 
             }
         }
 
@@ -163,8 +181,4 @@ public class MovementPlayer : MonoBehaviour
         }
     }
 
-    public void SeeYou(bool enemySeeYou)
-    {
-        backStab = enemySeeYou;
-    }
 }
