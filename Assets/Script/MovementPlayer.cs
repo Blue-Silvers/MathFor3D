@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
+
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class MovementPlayer : MonoBehaviour
 {
@@ -47,7 +43,7 @@ public class MovementPlayer : MonoBehaviour
 
         foreach (GameObject cutHit in enemy)
         {
-            if (Input.GetKey(KeyCode.Mouse0))
+            /*if (Input.GetKey(KeyCode.Mouse0))
             {
                 eF = transform.position - cutHit.transform.position;
                 dotConversion = Vector3.Dot(cutHit.transform.forward, eF.normalized);
@@ -55,7 +51,7 @@ public class MovementPlayer : MonoBehaviour
 
                     if (dotConversion < 0.8 && dotDirection > backStabAngle && eF.magnitude <= colisionDistance)
                     {
-                        if (backStab)
+                        if (backStab == true)
                         {
                             print("GG");
                             cutHit.GetComponent<MeshRenderer>().material.color = Color.red; 
@@ -66,7 +62,7 @@ public class MovementPlayer : MonoBehaviour
                             print("Retry");
                         }
                     }
-            }
+            }*/
 
             eF = transform.position - cutHit.transform.position;
             dotConversion = Vector3.Dot(cutHit.transform.forward, eF.normalized);
@@ -76,6 +72,11 @@ public class MovementPlayer : MonoBehaviour
             {
                 canBackstab.SetActive(true);
                 backStab = true;
+                if (Input.GetKey(KeyCode.Mouse0))
+                {
+                    cutHit.GetComponent<MeshRenderer>().material.color = Color.red;
+                    Destroy(cutHit, 0.5f);
+                }
             }
             else
             {
@@ -93,6 +94,10 @@ public class MovementPlayer : MonoBehaviour
             { 
                 spotted.SetActive(false); 
             }
+        }
+        if (enemy.Length <= 0)
+        {
+            canBackstab.SetActive(true);
         }
 
         if (Input.GetKey(KeyCode.Mouse1))
