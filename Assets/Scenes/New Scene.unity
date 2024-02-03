@@ -470,10 +470,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 362279ce8156f58459675a21998d8168, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runSpeed: 10
-  walkSpeed: 5
-  horizontalSpeed: 100
-  magicAngle: {x: 0, y: 1, z: 0}
+  runSpeed: 20
+  walkSpeed: 10
+  horizontalSpeed: 10
+  magicAngle: {x: 1, y: 0, z: 0}
   rigidbody: {fileID: 1220633776}
   cam: {fileID: 903971971}
   fovValue: 75

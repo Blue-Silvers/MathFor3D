@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
 public class PlaneMoove : MonoBehaviour
@@ -11,10 +12,11 @@ public class PlaneMoove : MonoBehaviour
     bool isRunning = false;
     private Vector2 input;
     [SerializeField] private Vector3 magicAngle;
-    [SerializeField] Rigidbody rigidbody;
+    [SerializeField] private Rigidbody rigidbody;
     [SerializeField] Camera cam;
     [SerializeField] int fovValue;
     int aiming = 0;
+
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -49,15 +51,17 @@ public class PlaneMoove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float angle2 = horizontalSpeed * Time.deltaTime * input.y;
-        transform.rotation *= Quaternion.AngleAxis(angle2, Vector3.back);
+        /*float angle2 = horizontalSpeed * Time.deltaTime * input.y;
+        transform.rotation *= Quaternion.AngleAxis(angle2, Vector3.back);*/
 
-        float angle = horizontalSpeed * Time.deltaTime * - input.x;
-        transform.rotation *= Quaternion.AngleAxis(angle, magicAngle);
+        //float angle = horizontalSpeed * Time.deltaTime * - input.x;
+        //transform.rotation *= Quaternion.AngleAxis(angle, magicAngle);
+        transform.rotation *= GetQuaternionFromAngle((horizontalSpeed * input.x * Time.deltaTime)*Mathf.Deg2Rad, transform.right);
 
-        Vector3 movement = new Vector3((transform.forward.y * 1 * speed * Time.deltaTime), 0, -(transform.forward.x * 1 * speed * Time.deltaTime));
-        rigidbody.MovePosition(transform.position + movement);
-
+        /*Vector3 movement = new Vector3((transform.forward.y * 1 * speed * Time.deltaTime), 0, -(transform.forward.x * 1 * speed * Time.deltaTime));
+        rigidbody.MovePosition(transform.position + movement);*/
+        //rigidbody.AddForce(transform.TransformDirection(Vector3.up) * speed);
+        transform.Translate(Vector3.up * speed * Time.deltaTime);
 
         if (aiming == 1)
         {
@@ -91,4 +95,14 @@ public class PlaneMoove : MonoBehaviour
         }
 
     }
+    Quaternion GetQuaternionFromAngle(float angle, Vector3 axis)
+    {
+        return new Quaternion(
+                (Mathf.Sin(angle) / 2) * axis.x,  //x
+                (Mathf.Sin(angle) / 2) * axis.y,  //y
+                (Mathf.Sin(angle) / 2) * axis.z,  //z
+                (Mathf.Cos(angle) / 2)          //w
+            );
+    }
+
 }
