@@ -57,7 +57,7 @@ public class PlaneMoove : MonoBehaviour
         //float angle = horizontalSpeed * Time.deltaTime * - input.x;
         //transform.rotation *= Quaternion.AngleAxis(angle, magicAngle);
         transform.rotation *= GetQuaternionFromAngle((horizontalSpeed * input.x * Time.deltaTime)*Mathf.Deg2Rad, transform.right);
-
+        transform.rotation *= GetQuaternionFromAngleUp((horizontalSpeed * input.y * Time.deltaTime)*Mathf.Deg2Rad, transform.right);
         /*Vector3 movement = new Vector3((transform.forward.y * 1 * speed * Time.deltaTime), 0, -(transform.forward.x * 1 * speed * Time.deltaTime));
         rigidbody.MovePosition(transform.position + movement);*/
         //rigidbody.AddForce(transform.TransformDirection(Vector3.up) * speed);
@@ -98,11 +98,30 @@ public class PlaneMoove : MonoBehaviour
     Quaternion GetQuaternionFromAngle(float angle, Vector3 axis)
     {
         return new Quaternion(
-                (Mathf.Sin(angle) / 2) * axis.x,  //x
+                (Mathf.Sin(angle) / 2) * - axis.x,  //x
                 (Mathf.Sin(angle) / 2) * axis.y,  //y
                 (Mathf.Sin(angle) / 2) * axis.z,  //z
                 (Mathf.Cos(angle) / 2)          //w
             );
     }
 
+    Quaternion GetQuaternionFromAngleUp(float angle, Vector3 axis)
+    {
+        return new Quaternion(
+                0,  //x
+                0,  //y
+                (Mathf.Sin(angle) / 2) * axis.z,  //z
+                (Mathf.Cos(angle) / 2)          //w
+            );
+    }
+
+    //Quaternion GetQuaternionFromAngle(float angle, Vector3 axis)
+    //{
+    //    return new Quaternion(
+    //            (Mathf.Sin(angle) / 2) * axis.x,  //x
+    //            (Mathf.Sin(angle) / 2) * axis.y,  //y
+    //            (Mathf.Sin(angle) / 2) * axis.z,  //z
+    //            (Mathf.Cos(angle) / 2)          //w
+    //        );
+    //}
 }
