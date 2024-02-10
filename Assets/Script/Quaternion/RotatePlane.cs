@@ -57,12 +57,12 @@ public class RotatePlane : MonoBehaviour
         plane.transform.localRotation *= Quaternion.AngleAxis(angle, magicAngle);
         if (plane.transform.localRotation == Q1)
         {
-            print("Right");
+            //print("Right");
             transform.rotation *= GetQuaternionFromAngleRightLeft((horizontalSpeed * 1 * Time.deltaTime) * Mathf.Deg2Rad, transform.up);
         }
         if (plane.transform.localRotation == Q2)
         {
-            print("Left");
+            //print("Left");
             transform.rotation *= GetQuaternionFromAngleRightLeft((horizontalSpeed * -1 * Time.deltaTime) * Mathf.Deg2Rad, transform.up);
         }
 
